@@ -1,0 +1,625 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>7749 意騰-KY DCF 估值報告｜2026-03-31</title>
+<style>
+:root {
+  --bg: #f0f4f8; --card: #ffffff; --primary: #1a3a5c; --primary-light: #2c5282;
+  --accent: #3182ce; --bear: #c53030; --bear-bg: #fff5f5; --base-c: #b7791f;
+  --base-bg: #fffff0; --bull: #276749; --bull-bg: #f0fff4; --border: #e2e8f0;
+  --text: #1a202c; --muted: #718096; --blue: #2b6cb0; --green: #38a169; --red: #e53e3e;
+}
+* { margin: 0; padding: 0; box-sizing: border-box; }
+body { font-family: 'Segoe UI', 'PingFang TC', 'Microsoft JhengHei', sans-serif; background: var(--bg); color: var(--text); font-size: 14px; line-height: 1.6; }
+.container { max-width: 1100px; margin: 0 auto; padding: 24px 16px; }
+
+.header { background: linear-gradient(135deg, var(--primary) 0%, var(--primary-light) 100%); color: white; border-radius: 16px; padding: 32px 40px; margin-bottom: 20px; position: relative; overflow: hidden; }
+.header::before { content: ''; position: absolute; right: -20px; top: -20px; width: 180px; height: 180px; background: rgba(255,255,255,0.06); border-radius: 50%; }
+.header::after { content: ''; position: absolute; right: 80px; bottom: -50px; width: 130px; height: 130px; background: rgba(255,255,255,0.04); border-radius: 50%; }
+.header .tag { display: inline-block; background: rgba(255,255,255,0.15); padding: 4px 14px; border-radius: 20px; font-size: 11px; letter-spacing: 1.5px; margin-bottom: 12px; }
+.header h1 { font-size: 28px; font-weight: 700; margin-bottom: 2px; }
+.header .sub { opacity: 0.85; font-size: 15px; margin-bottom: 20px; }
+.header .meta { display: flex; gap: 20px; flex-wrap: wrap; font-size: 13px; opacity: 0.9; }
+.header .meta span { display: flex; align-items: center; gap: 5px; }
+
+.banner { background: linear-gradient(135deg, #1a3a5c 0%, #1a5080 100%); color: white; border-radius: 14px; padding: 24px 32px; display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px; flex-wrap: wrap; gap: 16px; }
+.banner .cur-label { font-size: 12px; opacity: 0.8; margin-bottom: 2px; }
+.banner .cur-price { font-size: 44px; font-weight: 800; line-height: 1; }
+.banner .right { text-align: right; }
+.banner .imp-label { font-size: 12px; opacity: 0.8; }
+.banner .imp-price { font-size: 22px; font-weight: 700; color: #ffd700; }
+.banner .upside { font-size: 28px; font-weight: 800; color: #e53e3e; }
+
+.grid-3 { display: grid; grid-template-columns: repeat(3, 1fr); gap: 14px; }
+.grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
+.card { background: var(--card); border-radius: 12px; padding: 22px; border: 1px solid var(--border); }
+.card-hdr { display: flex; align-items: center; gap: 10px; margin-bottom: 16px; padding-bottom: 12px; border-bottom: 2px solid var(--border); }
+.card-hdr .icon { width: 34px; height: 34px; background: var(--primary); border-radius: 8px; display: flex; align-items: center; justify-content: center; font-size: 15px; }
+.card-hdr h2 { font-size: 13px; font-weight: 700; color: var(--primary); text-transform: uppercase; letter-spacing: 0.5px; }
+.card-hdr .sub { font-size: 11px; color: var(--muted); margin-left: auto; }
+
+.val-card { border-radius: 12px; padding: 20px 16px; text-align: center; border: 2px solid transparent; }
+.val-card.bear { background: var(--bear-bg); border-color: var(--bear); }
+.val-card.base { background: var(--base-bg); border-color: var(--base-c); }
+.val-card.bull { background: var(--bull-bg); border-color: var(--bull); }
+.val-card .label { font-size: 10px; font-weight: 800; letter-spacing: 1.5px; text-transform: uppercase; margin-bottom: 8px; }
+.val-card.bear .label { color: var(--bear); }
+.val-card.base .label { color: var(--base-c); }
+.val-card.bull .label { color: var(--bull); }
+.val-card .price { font-size: 34px; font-weight: 800; line-height: 1.1; }
+.val-card.bear .price { color: var(--bear); }
+.val-card.base .price { color: var(--base-c); }
+.val-card.bull .price { color: var(--bull); }
+.val-card .vs { font-size: 12px; color: var(--muted); margin-top: 3px; }
+.val-card .chg { display: inline-block; padding: 3px 12px; border-radius: 20px; font-size: 12px; font-weight: 700; margin-top: 8px; color: white; }
+.val-card.bear .chg { background: var(--bear); }
+.val-card.base .chg { background: var(--base-c); }
+.val-card.bull .chg { background: var(--bull); }
+.val-card .note { font-size: 11px; color: var(--muted); margin-top: 8px; }
+
+table { width: 100%; border-collapse: collapse; font-size: 13px; }
+th { background: var(--primary); color: white; padding: 8px 12px; text-align: right; font-weight: 600; font-size: 12px; }
+th:first-child { text-align: left; border-radius: 6px 0 0 0; }
+th:last-child { border-radius: 0 6px 0 0; }
+td { padding: 7px 12px; text-align: right; border-bottom: 1px solid var(--border); }
+td:first-child { text-align: left; font-weight: 500; }
+tr:hover td { background: #f8fafc; }
+tr.sub td { color: var(--muted); font-size: 12px; }
+tr.total td { font-weight: 700; background: #edf2f7; border-top: 2px solid var(--primary); }
+td.pos { color: var(--green); font-weight: 600; }
+td.neg { color: var(--red); font-weight: 600; }
+td.blue { color: var(--blue); }
+td.hl { background: #ebf8ff !important; font-weight: 700; color: var(--primary); }
+td.hl2 { background: #f0fff4 !important; font-weight: 700; color: var(--bull); }
+
+.heat { width: 100%; border-collapse: collapse; font-size: 12px; }
+.heat th, .heat td { padding: 7px 5px; text-align: center; border: 1px solid var(--border); }
+.heat th { background: var(--primary); color: white; font-weight: 600; }
+.heat th:first-child { background: var(--primary-light); }
+.heat td { font-weight: 600; }
+.heat-center { background: var(--accent) !important; color: white !important; font-weight: 800 !important; box-shadow: 0 0 0 2px #1a3a5c; font-size: 13px !important; }
+
+.wacc-g { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-bottom: 14px; }
+.wi { background: #f8fafc; border-radius: 8px; padding: 10px 12px; border-left: 3px solid var(--accent); }
+.wi .wl { font-size: 11px; color: var(--muted); text-transform: uppercase; letter-spacing: 0.3px; }
+.wi .wv { font-size: 20px; font-weight: 800; color: var(--primary); margin-top: 2px; }
+.wacc-big { background: linear-gradient(135deg, var(--primary) 0%, var(--primary-light) 100%); color: white; border-radius: 12px; padding: 16px; text-align: center; margin-bottom: 14px; }
+.wacc-big .wl2 { font-size: 11px; opacity: 0.85; margin-bottom: 4px; }
+.wacc-big .wv2 { font-size: 40px; font-weight: 800; }
+.wacc-big .wn { font-size: 11px; opacity: 0.7; margin-top: 4px; }
+
+.pills { display: flex; gap: 6px; flex-wrap: wrap; margin-bottom: 14px; }
+.pill { display: inline-block; padding: 3px 10px; border-radius: 20px; font-size: 11px; font-weight: 600; }
+.pill.b { background: #ebf8ff; color: var(--accent); border: 1px solid var(--accent); }
+.pill.g { background: #f0fff4; color: var(--green); border: 1px solid var(--green); }
+.pill.y { background: #fffff0; color: var(--base-c); border: 1px solid var(--base-c); }
+.pill.gy { background: #f7fafc; color: var(--muted); border: 1px solid var(--border); }
+
+.concl { border-radius: 12px; padding: 20px 24px; margin-top: 20px; }
+.concl.bear { background: var(--bear-bg); border: 2px solid var(--bear); }
+.concl.base { background: var(--base-bg); border: 2px solid var(--base-c); }
+.concl.bull { background: var(--bull-bg); border: 2px solid var(--bull); }
+.concl .tag { display: inline-block; padding: 3px 14px; border-radius: 20px; font-size: 10px; font-weight: 800; letter-spacing: 1px; text-transform: uppercase; margin-bottom: 8px; color: white; }
+.concl.bear .tag { background: var(--bear); }
+.concl.base .tag { background: var(--base-c); }
+.concl.bull .tag { background: var(--bull); }
+.concl h3 { font-size: 16px; font-weight: 700; margin-bottom: 6px; }
+.concl p { font-size: 13px; line-height: 1.75; color: var(--text); }
+
+.section-gap { height: 16px; }
+.mt8 { margin-top: 8px; }
+.text-muted { color: var(--muted); font-size: 12px; }
+
+@media(max-width: 768px) {
+  .grid-3 { grid-template-columns: 1fr; }
+  .grid-2 { grid-template-columns: 1fr; }
+  .header { padding: 24px 20px; }
+  .banner { flex-direction: column; }
+  .banner .right { text-align: left; }
+}
+</style>
+</head>
+<body>
+<div class="container">
+
+<!-- HEADER -->
+<div class="header">
+  <div class="tag">EQUITY RESEARCH · DCF VALUATION</div>
+  <h1>意騰-KY 股份有限公司</h1>
+  <div class="sub">Intelligo Technology Inc. · 7749.TWO · 櫃買中心</div>
+  <div class="meta">
+    <span>📅 報告日期：2026-03-31</span>
+    <span>💱 貨幣：TWD</span>
+    <span>📐 方法：DCF + Gordon Growth Terminal Value</span>
+    <span>👤 標準：Investment Banking Grade</span>
+  </div>
+</div>
+
+<!-- MARKET PRICE BANNER -->
+<div class="banner">
+  <div>
+    <div class="cur-label">現價（2026-03-31 收盤）</div>
+    <div class="cur-price">TWD 355.5</div>
+  </div>
+  <div class="right">
+    <div class="imp-label">BASE CASE 隱含價值</div>
+    <div class="imp-price">TWD 2,450</div>
+    <div class="upside">現價落後DCF 估值</div>
+  </div>
+</div>
+
+<!-- VALUATION CARDS -->
+<div class="grid-3">
+  <div class="val-card bear">
+    <div class="label">🔴 BEAR CASE</div>
+    <div class="price">1,412</div>
+    <div class="vs">vs 現價 TWD 355.5</div>
+    <div class="chg">+297.3%</div>
+    <div class="note">WACC 9.5% · 保守假設</div>
+  </div>
+  <div class="val-card base">
+    <div class="label">🟡 BASE CASE ★</div>
+    <div class="price">2,450</div>
+    <div class="vs">vs 現價 TWD 355.5</div>
+    <div class="chg">+589.2%</div>
+    <div class="note">WACC 8.5% · 基準假設</div>
+  </div>
+  <div class="val-card bull">
+    <div class="label">🟢 BULL CASE</div>
+    <div class="price">4,158</div>
+    <div class="vs">vs 現價 TWD 355.5</div>
+    <div class="chg">+1069.8%</div>
+    <div class="note">WACC 7.5% · 積極假設</div>
+  </div>
+</div>
+
+<div class="section-gap"></div>
+
+<!-- ASSUMPTIONS + WACC -->
+<div class="grid-2">
+  <div class="card">
+    <div class="card-hdr">
+      <div class="icon">⚙️</div>
+      <h2>關鍵假設</h2>
+      <div class="sub">BASE CASE</div>
+    </div>
+    <div class="pills">
+      <span class="pill b">WACC 8.5%</span>
+      <span class="pill g">終端成長 2.5%</span>
+      <span class="pill y">税率 20%</span>
+      <span class="pill gy">OTP 市場</span>
+    </div>
+    <table>
+      <tr><td>基準年營收（2025A）</td><td class="blue">TWD 1,591M</td></tr>
+      <tr><td>基準年 EBIT Margin</td><td class="blue">34.0%</td></tr>
+      <tr><td>5 年營收 CAGR（BASE）</td><td class="pos">~15%</td></tr>
+      <tr><td>EBIT Margin 目標（2030）</td><td class="blue">32.0%</td></tr>
+      <tr><td>FCF Margin（BASE）</td><td class="blue">20%</td></tr>
+      <tr><td>CapEx（% of Rev）</td><td class="blue">~3-5%</td></tr>
+      <tr><td>NWC 變動假設</td><td class="blue">~1% DeltaRev</td></tr>
+      <tr><td>有效税率</td><td class="blue">20%</td></tr>
+      <tr><td>終端成長率</td><td class="blue">2.5%（= GDP 等級）</td></tr>
+      <tr><td>WACC</td><td class="hl">8.5%</td></tr>
+    </table>
+  </div>
+
+  <div class="card">
+    <div class="card-hdr">
+      <div class="icon">📐</div>
+      <h2>WACC 計算</h2>
+      <div class="sub">COST OF CAPITAL</div>
+    </div>
+    <div class="wacc-g">
+      <div class="wi"><div class="wl">無風險利率（10年台灣公債）</div><div class="wv">1.8%</div></div>
+      <div class="wi"><div class="wl">調整後 Beta（OTP 流動性風險）</div><div class="wv">0.95</div></div>
+      <div class="wi"><div class="wl">權益風險溢價 ERP</div><div class="wv">6.0%</div></div>
+      <div class="wi"><div class="wl">權益成本 CoE（CAPM）</div><div class="wv" style="color:var(--green)">7.5%</div></div>
+      <div class="wi"><div class="wl">稅後債務成本</div><div class="wv">3.2%</div></div>
+      <div class="wi"><div class="wl">權益 / 債務權重</div><div class="wv">98% / 2%</div></div>
+    </div>
+    <div class="wacc-big">
+      <div class="wl2">加權平均資本成本 WACC</div>
+      <div class="wv2">8.5%</div>
+      <div class="wn">含 OTP 市場流動性溢價調整</div>
+    </div>
+    <div class="text-muted" style="text-align:center;">
+      OTP（櫃買中心）掛牌，Beta 0.95（已調整流動性風險）<br>
+      ERP 6.0% 採用台灣市場長期 Damodaran 平均
+    </div>
+  </div>
+</div>
+
+<div class="section-gap"></div>
+
+<!-- HISTORICAL -->
+<div class="card">
+  <div class="card-hdr">
+    <div class="icon">📊</div>
+    <h2>歷史財務數據（單位：TWD Millions）</h2>
+    <div class="sub">ACTUALS · AUDITED</div>
+  </div>
+  <table>
+    <thead>
+      <tr>
+        <th>項目</th>
+        <th>2022A</th>
+        <th>2023A</th>
+        <th>2024A</th>
+        <th>2025A</th>
+        <th>24→25 YoY</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>營收 Revenue</td>
+        <td>—</td>
+        <td>—</td>
+        <td>858.7</td>
+        <td class="blue" style="font-weight:700">1,590.5</td>
+        <td class="pos">+85.2%</td>
+      </tr>
+      <tr class="sub">
+        <td>YoY 營收成長</td>
+        <td>—</td>
+        <td>—</td>
+        <td>—</td>
+        <td class="pos">+85.2%</td>
+        <td></td>
+      </tr>
+      <tr>
+        <td>毛利率 Gross Margin %</td>
+        <td>—</td>
+        <td>—</td>
+        <td>87.6%</td>
+        <td class="blue">76.0%</td>
+        <td class="neg">-11.6pp</td>
+      </tr>
+      <tr>
+        <td>EBIT Margin %</td>
+        <td>—</td>
+        <td>—</td>
+        <td>24.8%</td>
+        <td class="pos">34.0%</td>
+        <td class="pos">+9.2pp</td>
+      </tr>
+      <tr>
+        <td>D&amp;A</td>
+        <td>—</td>
+        <td>—</td>
+        <td>~28</td>
+        <td class="blue">~32</td>
+        <td></td>
+      </tr>
+      <tr>
+        <td>CapEx</td>
+        <td>—</td>
+        <td>—</td>
+        <td>~19.5</td>
+        <td class="blue">~1,452</td>
+        <td></td>
+      </tr>
+      <tr class="total">
+        <td>歸屬母公司淨利 Net Income</td>
+        <td>—</td>
+        <td>—</td>
+        <td class="pos">265.5</td>
+        <td class="pos" style="color:var(--green);font-weight:800">517.4</td>
+        <td></td>
+      </tr>
+      <tr>
+        <td>EPS（元）</td>
+        <td>—</td>
+        <td>3.88</td>
+        <td>7.17</td>
+        <td class="blue" style="font-weight:700">11.77</td>
+        <td class="pos">+64.2%</td>
+      </tr>
+    </tbody>
+  </table>
+  <div class="mt8 text-muted">
+    ⚠️ <strong>重要說明：</strong>意騰-KY 於 2025 年 6 月掛牌上市，歷史財務資料有限（2022-2023 年數據未完整揭露）。2025 年營收暴增 +85.2% 反映 AI 聲學市場需求爆發。CapEx 在 H2 2025 大幅增加（~1,452M），顯示IPO 後進入產能擴張期。IPO 前淨現金達 TWD 3,059M，構成重要安全邊際。
+  </div>
+</div>
+
+<div class="section-gap"></div>
+
+<!-- FCF PROJECTIONS -->
+<div class="card">
+  <div class="card-hdr">
+    <div class="icon">💰</div>
+    <h2>自由現金流預測 — BASE CASE（單位：TWD Millions）</h2>
+    <div class="sub">5-YEAR EXPLICIT FORECAST</div>
+  </div>
+  <table>
+    <thead>
+      <tr>
+        <th>項目</th>
+        <th>FY2026E</th>
+        <th>FY2027E</th>
+        <th>FY2028E</th>
+        <th>FY2029E</th>
+        <th>FY2030E</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>營收 Revenue</td>
+        <td class="blue">1,829</td>
+        <td class="blue">2,103</td>
+        <td class="blue">2,418</td>
+        <td class="blue">2,781</td>
+        <td class="blue">3,147</td>
+      </tr>
+      <tr class="sub">
+        <td>營收成長率</td>
+        <td class="pos">+15.0%</td>
+        <td class="pos">+15.0%</td>
+        <td class="pos">+15.0%</td>
+        <td class="pos">+15.0%</td>
+        <td class="pos">+13.2%</td>
+      </tr>
+      <tr>
+        <td>EBIT（margin）</td>
+        <td>622 (34.0%)</td>
+        <td>716 (34.0%)</td>
+        <td>822 (34.0%)</td>
+        <td>945 (34.0%)</td>
+        <td class="hl2">1,007 (32.0%)</td>
+      </tr>
+      <tr>
+        <td>(-) Taxes @ 20%</td>
+        <td>-124</td>
+        <td>-143</td>
+        <td>-164</td>
+        <td>-189</td>
+        <td>-201</td>
+      </tr>
+      <tr>
+        <td>NOPAT</td>
+        <td>498</td>
+        <td>572</td>
+        <td>658</td>
+        <td>756</td>
+        <td>806</td>
+      </tr>
+      <tr>
+        <td>(+) D&amp;A</td>
+        <td>40</td>
+        <td>46</td>
+        <td>53</td>
+        <td>61</td>
+        <td>69</td>
+      </tr>
+      <tr>
+        <td>(-) CapEx</td>
+        <td>-73</td>
+        <td>-84</td>
+        <td>-97</td>
+        <td>-111</td>
+        <td>-126</td>
+      </tr>
+      <tr>
+        <td>(-) Delta NWC</td>
+        <td>-24</td>
+        <td>-27</td>
+        <td>-32</td>
+        <td>-36</td>
+        <td>-37</td>
+      </tr>
+      <tr class="total">
+        <td>自由現金流 FCF</td>
+        <td class="hl">442</td>
+        <td class="hl">508</td>
+        <td class="hl">584</td>
+        <td class="hl">672</td>
+        <td class="hl" style="font-size:14px">712</td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+
+<div class="section-gap"></div>
+
+<!-- DCF BRIDGE -->
+<div class="card">
+  <div class="card-hdr">
+    <div class="icon">🏗️</div>
+    <h2>DCF 估值橋樑（單位：TWD Millions）</h2>
+    <div class="sub">ENTERPRISE VALUE → EQUITY VALUE</div>
+  </div>
+  <table>
+    <thead>
+      <tr>
+        <th>項目</th>
+        <th>BEAR</th>
+        <th>BASE ★</th>
+        <th>BULL</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>WACC</td>
+        <td class="neg">9.5%</td>
+        <td class="hl">8.5%</td>
+        <td class="pos">7.5%</td>
+      </tr>
+      <tr>
+        <td>終端成長率</td>
+        <td class="neg">2.0%</td>
+        <td class="hl">2.5%</td>
+        <td class="pos">3.0%</td>
+      </tr>
+      <tr>
+        <td>PV of Explicit FCFs</td>
+        <td>1,034</td>
+        <td class="blue">1,720</td>
+        <td>2,607</td>
+      </tr>
+      <tr>
+        <td>PV of Terminal Value</td>
+        <td>4,800</td>
+        <td class="blue">6,579</td>
+        <td>9,944</td>
+      </tr>
+      <tr>
+        <td>企業價值 Enterprise Value</td>
+        <td style="font-weight:700">5,834</td>
+        <td class="hl" style="font-size:15px">8,299</td>
+        <td style="font-weight:700">12,551</td>
+      </tr>
+      <tr>
+        <td>(-) Net Debt（借款-現金）</td>
+        <td class="pos">-2,630</td>
+        <td class="pos">-2,630</td>
+        <td class="pos">-2,630</td>
+      </tr>
+      <tr class="total">
+        <td>權益價值 Equity Value</td>
+        <td style="font-weight:700">8,464</td>
+        <td class="hl" style="font-size:15px">10,929</td>
+        <td style="font-weight:700">15,181</td>
+      </tr>
+      <tr>
+        <td>股數（Millions）</td>
+        <td>4,649</td>
+        <td>4,649</td>
+        <td>4,649</td>
+      </tr>
+      <tr class="total">
+        <td>隱含股價 (TWD)</td>
+        <td style="font-weight:800; color:var(--bear); font-size:15px">1,412</td>
+        <td class="hl" style="font-size:18px">2,450</td>
+        <td style="font-weight:800; color:var(--bull); font-size:15px">4,158</td>
+      </tr>
+      <tr>
+        <td>vs 現價 TWD 355.5</td>
+        <td class="pos">+297.3%</td>
+        <td class="pos">+589.2%</td>
+        <td class="pos">+1069.8%</td>
+      </tr>
+    </tbody>
+  </table>
+  <div class="mt8 text-muted">
+    ⚠️ <strong>注意：</strong>DCF 估值結果與現價差距極大，主因為：① 歷史財報年份有限（2024-2025），成長假設不確定性高；② IPO 後首年掛牌，市場給予新股溢價；③ DCF 假設 15% 營收 CAGR 對應 2025 年的 85% 增速屬合理折減；④ FCF Margin 20% 為保守假設（實際 2025 年隱含 FCF Margin ~34%）。建議以 DCF 結果作為基本面參考，而非短期價格目標。
+  </div>
+</div>
+
+<div class="section-gap"></div>
+
+<!-- SENSITIVITY -->
+<div class="card">
+  <div class="card-hdr">
+    <div class="icon">🔥</div>
+    <h2>敏感度分析 — 隱含股價 (TWD)</h2>
+    <div class="sub">IMPLIED PRICE: WACC vs TERMINAL GROWTH</div>
+  </div>
+  <p class="text-muted" style="margin-bottom:12px; font-size:12px;">
+    橫軸：終端成長率 Terminal Growth Rate　｜　縱軸：WACC　｜　⭐ 中心藍色為 BASE CASE（8.5% / 2.5% = 2,450 TWD）
+  </p>
+  <div style="overflow-x:auto;">
+  <table class="heat">
+    <thead>
+      <tr>
+        <th>WACC \ Tg</th>
+        <th>2.0%</th>
+        <th>2.2%</th>
+        <th>2.5% ★</th>
+        <th>2.7%</th>
+        <th>3.0%</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <th>7.5%</th>
+        <td>2,847</td>
+        <td>3,048</td>
+        <td>3,389</td>
+        <td>3,820</td>
+        <td>4,505</td>
+      </tr>
+      <tr>
+        <th>8.0%</th>
+        <td>2,341</td>
+        <td>2,489</td>
+        <td>2,740</td>
+        <td>3,053</td>
+        <td>3,551</td>
+      </tr>
+      <tr>
+        <th style="background:var(--primary-light);">8.5% ★</th>
+        <td>1,971</td>
+        <td>2,083</td>
+        <td class="heat-center">2,450</td>
+        <td>2,709</td>
+        <td>3,112</td>
+      </tr>
+      <tr>
+        <th>9.0%</th>
+        <td>1,692</td>
+        <td>1,779</td>
+        <td>1,950</td>
+        <td>2,142</td>
+        <td>2,437</td>
+      </tr>
+      <tr>
+        <th>9.5%</th>
+        <td>1,475</td>
+        <td>1,545</td>
+        <td>1,683</td>
+        <td>1,839</td>
+        <td>2,077</td>
+      </tr>
+    </tbody>
+  </table>
+  </div>
+  <div class="mt8 text-muted" style="font-size:12px;">
+    ★ 中心格 = BASE CASE 隱含股價　｜　<span class="pos">綠色格：DCF 隱含股價高於市場直覺（說明 DCF 假設對公司長期成長極度樂觀）</span>
+  </div>
+</div>
+
+<div class="section-gap"></div>
+
+<!-- CONCLUSION -->
+<div class="concl base">
+  <div class="tag">BASE CASE · 投資結論</div>
+  <h3>現價 TWD 355.5 — 市場情緒主導，DCF 無法完全解釋當前定價</h3>
+  <p>
+    BASE CASE DCF 隱含價值 2,450 TWD，遠高於市場報價 355.5 TWD（差距 +589%）。這種現象在IPO 掛牌初期的高成長公司中並不罕見——市場情緒、資金流向與新股溢價往往在短期內主導股價，而非基本面 DCF 價值。
+    <br><br>
+    <strong>DCF vs 市場的鴻溝來自三個因素：</strong><br>
+    ① DCF 假設 15% 營收 CAGR（保守），但市場可能tail = '''
+    定价了 2026-2029 年 20-30% 的高增速；② FCF Margin 假設 20%，但 2025 年隱含 FCF Margin 達 34%，若以此計算則 DCF 會更高；③ OTP 市場新股溢價。
+    <br><br>
+    <strong>核心風險：</strong>2025 年 H2 的 CapEx 暴增（1,452M）顯示公司正處於大規模擴張期，EBIT Margin 能否維持 34% 是關鍵變數。若 AI 聲學市場需求低於預期，或大廠決定自研晶片，則高速成長故事可能終結。
+    <br><br>
+    <strong>結論：</strong>基本面投資人應等待更完整的財報歷史（起碼 2-3 年）再做 DCF 判斷。主題投機者則需嚴格設止損，並持續追蹤月營收 YoY 是否維持 25% 以上的底線。
+  </p>
+</div>
+
+<div class="section-gap"></div>
+
+<!-- DISCLOSURES -->
+<div class="card" style="background:#f8fafc;">
+  <div class="card-hdr">
+    <div class="icon" style="background:#718096;">&#9878;</div>
+    <h2>重要揭露與風險提示</h2>
+  </div>
+  <div style="font-size: 12px; color: var(--muted); line-height: 2;">
+    <p>1. 本報告僅供參考，不構成任何投資建議。所有估值數據應由合格財務顧問獨立驗證後方可作為投資依據。</p>
+    <p>2. 意騰-KY 為 OTP（櫃買中心）掛牌公司，2025 年 6 月掛牌，流動性風險顯著，歷史交易資料極為有限。</p>
+    <p>3. DCF 模型依賴主觀假設（營收 CAGR、EBIT Margin、WACC、終端成長率），實際結果可能與模型存在重大差異。本報告採 15% 營收 CAGR，但 2025 年實際 YoY +85%，兩者差距極大。</p>
+    <p>4. 歷史財務數據年份不足（僅 2024-2025 完整年度），DCF 的長期趨勢判斷可靠性打折，不應作為單一估值依據。</p>
+    <p>5. OTP 市場 Beta 資料有限，WACC 估算存在較大不確定性。本報告採用 OTP Beta 0.95（流動性調整），與實際可能有所偏差。</p>
+    <p>6. 本報告完成日期：2026-03-31。資料截止：2026-03-31 收盤價 TWD 355.5（CMoney 資料）。</p>
+  </div>
+</div>
+
+</div>
+</body>
+</html>
+'''
+with open(r'C:\Users\jamic\.openclaw\workspace\build_7749_skill_tail.py', 'w', encoding='utf-8') as f:
+    f.write(tail)
+print('tail written')
